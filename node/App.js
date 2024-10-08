@@ -7,7 +7,7 @@ const PORT = 5000
 
 const UserRoute = require('./Routes/userRoute');
 
-mongoose.connect('').then(() => {
+mongoose.connect('mongodb://localhost:27017/github-mern').then(() => {
     console.log('Database Connection : Success')
 }).catch(() => {
     console.log('Database Connection : Failed')
