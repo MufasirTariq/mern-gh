@@ -20,7 +20,8 @@ const userSignup = async (req, res) => {
         const user = UserModel({name, email, password:hashPass});
         user.save()
         if(user){
-            res.status(201).json(user);
+            const token = jwt.sign({_id:user._id}, jwt_secret);
+            res.status(201).json({user,token});
         } else {
             res.status(404).json({'Register Error':'Not registered internal Error'});
         }
@@ -35,7 +36,8 @@ const userSignin = async (req, res) => {
     if(user){
         bcrypt.compare(password,user.password)
         .then((isMatch)=>{
-            res.status(201).json(user);
+            const token = jwt.sign({_id:user._id}, jwt_secret);
+            res.status(201).json({user, token});
         }).catch((err) => {
             res.status(400).json({'SignIn Error':err});
         })
