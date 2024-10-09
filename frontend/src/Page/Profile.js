@@ -1,8 +1,8 @@
-import {React, useEffect, useState} from 'react';
+import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const Profile = () => {
 
+const Profile = () => {
   const user = JSON.parse(localStorage.getItem('User'));
   const navigate = useNavigate();
   
@@ -10,123 +10,108 @@ const Profile = () => {
   const [friends, setFriends] = useState([]);
 
   const fetchingAllUsers = async () => {
-    const response = await axios.get('http://localhost:5000/api/user/allusers')
-    if(response){
-      setUsers(response.data)
+    try {
+      const response = await axios.get('http://localhost:5000/api/user/allusers');
+      setUsers(response.data);
       console.log(response.data);
-    } else {
-      console.log("error");
+    } catch (error) {
+      console.error("Error fetching users:", error);
     }
-    }
+  };
 
-  // if no signin or sigup you can't go to profile page
   useEffect(() => {
     const token = localStorage.getItem("Token");
-    if(!token){
-      navigate('/')
+    if (!token) {
+      navigate('/');
     } else {
       fetchingAllUsers();
       friendList();
     }
-  }, [])
+  }, [navigate]);
 
-
-  // add friend :
   const addFriend = async (friendId) => {
     const id = user._id;
-    const response = await axios.post('http://localhost:5000/api/user/addfriend',{friendId, id})
-    if (response){
+    try {
+      const response = await axios.post('http://localhost:5000/api/user/addfriend', { friendId, id });
       console.log(response.data);
       friendList();
-    } else {
-      console.log('error');
+    } catch (error) {
+      console.error("Error adding friend:", error);
     }
+  };
 
-  }
-
-  // remove friend :
   const removeFriend = async (friendId) => {
     const id = user._id;
-    const response = await axios.post('http://localhost:5000/api/user/removefriend',{friendId, id})
-    if (response){
+    try {
+      const response = await axios.post('http://localhost:5000/api/user/removefriend', { friendId, id });
       console.log(response.data);
       friendList();
-    } else {
-      console.log('error');
+    } catch (error) {
+      console.error("Error removing friend:", error);
     }
-
-  }
+  };
   
-  //diplaying friend list :
   const friendList = async () => {
     const id = user._id;
-    console.log(id)
-    const response = await axios.post('http://localhost:5000/api/user/friendlist',{id})
-    if(response){
+    try {
+      const response = await axios.post('http://localhost:5000/api/user/friendlist', { id });
       console.log(response.data.friends);
       setFriends(response.data.friends);
-    } else {
-      console.log("error");
+    } catch (error) {
+      console.error("Error fetching friend list:", error);
     }
-
-  }
+  };
   
+  const availableUsers = users.filter(u => !friends.some(fr => fr._id === u._id) && u._id !== user._id);
+
   return (
     <div className='profile'>
       <h1>Home Page</h1>
       
-      <button type='submit' name='logout-btn' 
-      onClick={() => {
+      <button type='button' onClick={() => {
         localStorage.clear();
-        navigate('/')}}>
-          Logout</button>
+        navigate('/');
+      }}>
+        Logout
+      </button>
 
-      {/* User info  */}
       {user ? (
         <>
           <h3>{user.name}</h3>
           <h3>{user.email}</h3>
         </>
-      ):(
-        <h2>no user details</h2>
+      ) : (
+        <h2>No user details</h2>
       )}
 
-      {/* People are not friends */}
-        <h2>People you may know :</h2>
-        <ul>
-          {users.length > 0 ? (
-            users.map((u) => {
-              if (u._id !== user._id) {
-                return (
-                  <li key={u._id}>
-                    {u.name} - <button type='button' name='add-friend' onClick={() => addFriend(u._id)}> Add + </button>
-                  </li>
-                );
-              }
-            return null; 
-          })
-            ) : ( <li>No users found</li>)
-          }
-        </ul>
-    
+      <h2>People You May Know:</h2>
+      <ul>
+        {availableUsers.length > 0 ? (
+          availableUsers.map(u => (
+            <li key={u._id}>
+              {u.name} - <button type='button' onClick={() => addFriend(u._id)}>Follow</button>
+            </li>
+          ))
+        ) : (
+          <li>No users found</li>
+        )}
+      </ul>
 
-      {/* Friends List     */}
       <h2>Your Friends</h2>
+      <h4>{friends.length} Followers</h4>
       <ul>
         {friends.length > 0 ? (
-          friends.map((fr) => {
-            return (
-              <li key={fr._id}>
-                {fr.name} - <button type='button' name='remove-friend' onClick={() => removeFriend(fr._id)} > Remove </button>
-
-              </li>
-            );
-            return null;
-          })
-        ):(<li>No Friends found</li>)}
+          friends.map(fr => (
+            <li key={fr._id}>
+              {fr.name} - <button type='button' onClick={() => removeFriend(fr._id)}>Unfollow</button>
+            </li>
+          ))
+        ) : (
+          <li>No Followers</li>
+        )}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
