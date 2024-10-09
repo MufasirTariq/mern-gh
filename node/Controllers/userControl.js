@@ -20,8 +20,7 @@ const userSignup = async (req, res) => {
         const user = UserModel({name, email, password:hashPass});
         user.save()
         if(user){
-            const token = jwt.sign({_id:user._id}, jwt_secret);
-            res.status(201).json({user,token});
+            res.status(201).json(user);
         } else {
             res.status(404).json({'Register Error':'Not registered internal Error'});
         }
@@ -32,7 +31,7 @@ const userSignup = async (req, res) => {
 const userSignin = async (req, res) => {
     const {email, password} =req.body;
     
-    const user = await UserModel.findOne({email:email});
+    const user = await UserModel.findOne({email:email}).populate('friends','name');
     if(user){
         bcrypt.compare(password,user.password)
         .then((isMatch)=>{
@@ -48,7 +47,7 @@ const userSignin = async (req, res) => {
 }
 
 const getAllUsers = async (req, res) => {
-    const users = await UserModel.find().select('-password');
+    const users = await UserModel.find().select('-password -friends');
     if(users){
         res.status(201).json(users);
     }else{
@@ -56,5 +55,50 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const addFriend = async (req, res) => {
 
-module.exports = {userSignup, userSignin, getAllUsers};
+    const{friendId, id} = req.body;
+    
+    const user = await UserModel.findById(id);
+    
+    if(user){
+    
+        const friendExist = user.friends.includes(friendId)
+    
+        if(!friendExist){
+    
+            const friendRequest =  await UserModel.findByIdAndUpdate(
+                id,
+                {$push:{friends:friendId}},
+                {new: true}
+            );
+            
+            if(!friendRequest){
+                res.status(404).json('Friend Not Added');
+                }
+            
+            const acceptRequest = await UserModel.findByIdAndUpdate(
+                friendId,
+                {$push:{friends:id}},
+                {new:true}      
+            )
+            
+            
+            if(friendRequest && acceptRequest){
+                res.status(201).json({Success:'Friend Added'});
+            } else {
+                res.status(404).json('Friend Not Added');
+            }
+        } else {
+            res.status(200).json({Error:"Already a Friend"});
+        }
+    } else {
+        res.status(404).json('Please SignIn!');
+    }   
+      
+
+    
+}
+
+
+module.exports = {userSignup, userSignin, getAllUsers, addFriend}; 

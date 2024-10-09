@@ -14,10 +14,10 @@ const SignUp = () => {
     console.log(name, email, password);
     try {
           const response = await axios.post('http://localhost:5000/api/user/signup',{name, email, password});
-          console.log("Success",response);
-          localStorage.setItem("Token",response.data.token);
-          localStorage.setItem("User",JSON.stringify(response.data.user));
-          navigate('/profile');
+          if(response){
+            navigate('/signin');
+          }
+          
     } catch (error) {
       console.log("Error",error);
     }
