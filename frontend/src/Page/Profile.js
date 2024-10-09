@@ -7,6 +7,7 @@ const Profile = () => {
   const navigate = useNavigate();
   
   const [users, setUsers] = useState([]);
+  const [friends, setFriends] = useState([]);
 
   const fetchingAllUsers = async () => {
     const response = await axios.get('http://localhost:5000/api/user/allusers')
@@ -25,8 +26,9 @@ const Profile = () => {
       navigate('/')
     } else {
       fetchingAllUsers();
+      friendList();
     }
-  }, [navigate])
+  }, [])
 
 
   // add friend :
@@ -35,13 +37,26 @@ const Profile = () => {
     const response = await axios.post('http://localhost:5000/api/user/addfriend',{friendId, id})
     if (response){
       console.log(response.data);
+      friendList();
     } else {
       console.log('error');
     }
 
   }
   
-  
+  //diplayinf friend list :
+  const friendList = async () => {
+    const id = user._id;
+    console.log(id)
+    const response = await axios.post('http://localhost:5000/api/user/friendlist',{id})
+    if(response){
+      console.log(response.data.friends);
+      setFriends(response.data.friends);
+    } else {
+      console.log("error");
+    }
+
+  }
   
   return (
     <div className='profile'>
@@ -56,41 +71,47 @@ const Profile = () => {
       {/* User info  */}
       {user ? (
         <>
-          <h2>{user.name}</h2>
-          <h2>{user.email}</h2>
+          <h3>{user.name}</h3>
+          <h3>{user.email}</h3>
         </>
       ):(
         <h2>no user details</h2>
       )}
 
       {/* People are not friends */}
-        <h2>People you may know!:</h2>
+        <h2>People you may know :</h2>
         <ul>
-        {users.length > 0 ? (
-          users.map((u) => {
-            
-            if (u._id !== user._id) {
-              return (
-                <li key={u._id}>
-                  {u.name} - 
-                  <button 
-                    type='button' 
-                    name='add-friend' 
-                    onClick={() => addFriend(u._id)}
-                  >
-                    Add +
-                  </button>
-                </li>
-        );
-      }
-      return null; 
-    })
-  ) : (
-    <li>No users found</li>
-  )}
-</ul>
+          {users.length > 0 ? (
+            users.map((u) => {
+              if (u._id !== user._id) {
+                return (
+                  <li key={u._id}>
+                    {u.name} - <button type='button' name='add-friend' onClick={() => addFriend(u._id)}> Add + </button>
+                  </li>
+                );
+              }
+            return null; 
+          })
+            ) : ( <li>No users found</li>)
+          }
+        </ul>
     
 
+      {/* Friends List     */}
+      <h2>Your Friends</h2>
+      <ul>
+        {friends.length > 0 ? (
+          friends.map((fr) => {
+            return (
+              <li key={fr._id}>
+                {fr.name} - <button type='button' name='remove-friend' > Remove </button>
+
+              </li>
+            );
+            return null;
+          })
+        ):(<li>No Friends found</li>)}
+      </ul>
     </div>
   )
 }

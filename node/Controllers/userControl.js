@@ -56,7 +56,6 @@ const userSignin = async (req, res) => {
     }
 };
 
-
 const getAllUsers = async (req, res) => {
     
     const users = await UserModel.find().select('-password -friends');
@@ -112,5 +111,14 @@ const addFriend = async (req, res) => {
     
 }
 
+const friendList = async (req, res) => {
+    const {id} = req.body;
+    const friendList = await UserModel.findById(id).select('friends').populate('friends')
+    if(friendList){
+        res.status(200).json(friendList)
+    } else {
+        res.status(404).json({Error:" no friend list"})
+    }  
+}
 
-module.exports = {userSignup, userSignin, getAllUsers, addFriend}; 
+module.exports = {userSignup, userSignin, getAllUsers, addFriend, friendList}; 
