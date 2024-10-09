@@ -47,5 +47,14 @@ const userSignin = async (req, res) => {
 
 }
 
+const getAllUsers = async (req, res) => {
+    const users = await UserModel.find().select('-password');
+    if(users){
+        res.status(201).json(users);
+    }else{
+        res.status(400).json({'Sending users':'NO users found!'});
+    }
+}
 
-module.exports = {userSignup, userSignin};
+
+module.exports = {userSignup, userSignin, getAllUsers};
