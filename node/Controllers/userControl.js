@@ -29,24 +29,36 @@ const userSignup = async (req, res) => {
 }
 
 const userSignin = async (req, res) => {
-    const {email, password} =req.body;
+    const { email, password } = req.body;
     
-    const user = await UserModel.findOne({email:email}).populate('friends','name');
-    if(user){
-        bcrypt.compare(password,user.password)
-        .then((isMatch)=>{
-            const token = jwt.sign({_id:user._id}, jwt_secret);
-            res.status(201).json({user, token});
-        }).catch((err) => {
-            res.status(400).json({'SignIn Error':err});
-        })
-    } else {
-        res.status(400).json({'SignIn Error':'Email not matched!'});
-    }
+    try {
+        // Find the user while excluding password and friends fields
+        const user = await UserModel.findOne({ email })
 
-}
+        if (user) {
+            
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (isMatch) {
+                
+                const token = jwt.sign({ _id: user._id }, jwt_secret);
+                const u = {name:user.name, email:user.email, _id:user._id}
+                res.status(201).json({ u, token });
+            
+            } else {
+                res.status(400).json({ 'SignIn Error': 'Invalid password!' });
+            }
+        } else {
+            res.status(400).json({ 'SignIn Error': 'Email not matched!' });
+        }
+    } catch (error) {
+        console.error("SignIn Error:", error);
+        res.status(500).json({ 'SignIn Error': 'Server error' });
+    }
+};
+
 
 const getAllUsers = async (req, res) => {
+    
     const users = await UserModel.find().select('-password -friends');
     if(users){
         res.status(201).json(users);

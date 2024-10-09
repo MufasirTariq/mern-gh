@@ -50,8 +50,8 @@ const Profile = () => {
       <button type='submit' name='logout-btn' 
       onClick={() => {
         localStorage.clear();
-        navigate('/')
-        }}>Logout</button>
+        navigate('/')}}>
+          Logout</button>
 
       {/* User info  */}
       {user ? (

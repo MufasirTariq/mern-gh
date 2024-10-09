@@ -15,7 +15,7 @@ const SignIn = () => {
         const response = await axios.post('http://localhost:5000/api/user/signin', {email, password})
         console.log('Success:', response);
         localStorage.setItem("Token",response.data.token);
-        localStorage.setItem("User",JSON.stringify(response.data.user));
+        localStorage.setItem("User",JSON.stringify(response.data.u));
         navigate('/profile');
     } catch (error) {
       console.log('Failed:', error);
