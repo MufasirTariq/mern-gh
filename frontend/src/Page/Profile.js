@@ -43,8 +43,21 @@ const Profile = () => {
     }
 
   }
+
+  // remove friend :
+  const removeFriend = async (friendId) => {
+    const id = user._id;
+    const response = await axios.post('http://localhost:5000/api/user/removefriend',{friendId, id})
+    if (response){
+      console.log(response.data);
+      friendList();
+    } else {
+      console.log('error');
+    }
+
+  }
   
-  //diplayinf friend list :
+  //diplaying friend list :
   const friendList = async () => {
     const id = user._id;
     console.log(id)
@@ -104,7 +117,7 @@ const Profile = () => {
           friends.map((fr) => {
             return (
               <li key={fr._id}>
-                {fr.name} - <button type='button' name='remove-friend' > Remove </button>
+                {fr.name} - <button type='button' name='remove-friend' onClick={() => removeFriend(fr._id)} > Remove </button>
 
               </li>
             );

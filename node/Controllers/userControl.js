@@ -111,6 +111,42 @@ const addFriend = async (req, res) => {
     
 }
 
+const removeFriend = async (req, res) => {
+
+    const{friendId, id} = req.body;
+    
+    const user = await UserModel.findById(id);
+    
+    if(user){
+    
+        const friendRequest =  await UserModel.findByIdAndUpdate(
+            id,
+            {$pull:{friends:friendId}},
+            {new: true}
+        );
+        
+        if(!friendRequest){
+            res.status(404).json('Friend Not Added');
+            }
+        
+        const acceptRequest = await UserModel.findByIdAndUpdate(
+            friendId,
+            {$pull:{friends:id}},
+            {new:true}      
+        )
+        
+        
+        if(friendRequest && acceptRequest){
+            res.status(201).json({Success:'Friend removed'});
+        } else {
+            res.status(404).json('Friend Not removed');
+        }
+        
+    } else {
+        res.status(404).json('Please SignIn!');
+    }  
+} 
+
 const friendList = async (req, res) => {
     const {id} = req.body;
     const friendList = await UserModel.findById(id).select('friends').populate('friends')
@@ -121,4 +157,11 @@ const friendList = async (req, res) => {
     }  
 }
 
-module.exports = {userSignup, userSignin, getAllUsers, addFriend, friendList}; 
+module.exports = {
+    userSignup,
+    userSignin,
+    getAllUsers,
+    addFriend,
+    removeFriend,
+    friendList,
+}; 
