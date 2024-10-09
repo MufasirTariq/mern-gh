@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
@@ -21,6 +21,15 @@ const SignIn = () => {
       console.log('Failed:', error);
     }
   }
+
+  // if token availble goto profile
+  useEffect(() => {
+    const token = localStorage.getItem('Token');
+    if(token){
+      navigate('/profile')
+    }
+  })
+
   return (
     <div className='signin'>
       <h1>SignIn Page</h1>
