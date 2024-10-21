@@ -1,5 +1,7 @@
 import {React, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
+import '../Css/Home.css';
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ const Home = () => {
   
   return (
     <div className='home'>
-        <h1>Home Page</h1>
+        
     </div>
   )
 }

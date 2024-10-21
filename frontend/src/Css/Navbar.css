@@ -2,9 +2,11 @@
     margin-left: 1%;
 }
 .navbar{
+    background-color:rgb(8 8 8) ;
     display: flex;
     justify-content: space-between;
-    box-shadow: 1px 5px 5px #e0dcdc;
+    box-shadow: 1px 5px 5px#a14747;
+    color: aliceblue;
 }
 
 ul{
@@ -13,6 +15,7 @@ ul{
 }
 
 li{
+    color: #db183c;
     list-style: none;
     padding: 8px 20px;
 }
@@ -23,7 +26,7 @@ a{
     font-size: 18px;
 }
 
-.primaryBtn{
+.logout-btn{
     cursor: pointer;
     font-weight: bolder;
     padding: 13px 25px;
@@ -36,7 +39,7 @@ a{
     transition: all 0.25s ease;
 }
 
-.primaryBtn:hover{
+.logout-btn:hover{
     transform: translateY(-5px);
     box-shadow: 0 10px 20px -10px rgba(219, 24, 44, 0.6);
 }

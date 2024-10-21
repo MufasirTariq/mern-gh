@@ -14,7 +14,7 @@ export const Navbar = () => {
           <Link to = '/profile'><li>Profile</li></Link>
           <Link to = '/createpost'><li>Create Post</li></Link>
           <Link to = '/followingpost'><li>My Feed</li></Link>
-          <Link to = {''}><button onClick={()=>{ localStorage.clear(); navigateTo('/');}}>Logout</button></Link>
+          <Link to = {''}><button className='logout-btn' onClick={()=>{ localStorage.clear(); navigateTo('/');}}>Logout</button></Link>
         </>
       ]
     } else {
@@ -28,7 +28,7 @@ export const Navbar = () => {
   };
   return (
     <div className="navbar">    
-       <h2 className='userName' onClick={() => {navigateTo('/')}} >MERN-GITHUB</h2>
+       <h2 className='userName' onClick={() => {navigateTo('/')}} >XOTWOD</h2>
       <ul className="nav-menu">
         {loginStatus()}
       </ul>

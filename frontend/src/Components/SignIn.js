@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {React, useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import '../Css/SignIn.css';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -32,25 +33,21 @@ const SignIn = () => {
 
   return (
     <div className='signin'>
-      <h1>SignIn Page</h1>
 
       <div className='signup-form'>
-      
-        <label>Email:</label>
+        <h2 className='xo'>XO</h2>
         <input type='email' name='email' placeholder='Enter Email' onChange={(e) => {setEmail(e.target.value)}} /> <br/>
         
-        <label>Password:</label>
         <input type='text' name='password' placeholder='Enter Password' onChange={(e) => {setPassword(e.target.value)}} /> <br/>
 
-        <input type='submit' name='signin-btn' value='SignIn' onClick={() => {sendData()}} />
+        <input type='submit' id='signin-btn' value='SignIn' onClick={() => {sendData()}} />
+
+        <Link to='/signup' className='loginPara'>Don't have an account?</Link>
+      
       </div>
 
-      <div>
-        <Link to='/signup'>Don't have an account?</Link>
-        <br/>
-        <Link to='/'>Home Page</Link>
-      </div>
-
+      
+        
     </div>
   )
 }

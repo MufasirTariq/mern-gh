@@ -1,0 +1,10 @@
+.home {
+    background-image: url("https://s3.amazonaws.com/shecodesio-production/uploads/files/000/070/130/original/weeknderas.jpg?1678026694");
+    background-size: cover;
+    background-position: center; 
+    height: 100vh; 
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
