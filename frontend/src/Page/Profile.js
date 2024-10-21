@@ -66,14 +66,7 @@ const Profile = () => {
 
   return (
     <div className='profile'>
-      <h1>Home Page</h1>
-      
-      <button type='button' onClick={() => {
-        localStorage.clear();
-        navigate('/');
-      }}>
-        Logout
-      </button>
+      <h1>Profile Page</h1>
 
       {user ? (
         <>

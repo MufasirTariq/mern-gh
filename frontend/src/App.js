@@ -4,10 +4,13 @@ import Home from './Page/Home';
 import Profile from "./Page/Profile";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
+import { Navbar } from "./Components/Navbar";
+import './Css/Navbar.css'
 
 function App() {
   return (
     <BrowserRouter>
+    <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='/profile' element={<Profile/>}></Route>

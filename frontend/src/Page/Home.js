@@ -1,5 +1,6 @@
 import {React, useEffect} from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
 const Home = () => {
   const navigate = useNavigate();
 
@@ -13,10 +14,6 @@ const Home = () => {
   return (
     <div className='home'>
         <h1>Home Page</h1>
-
-        <Link to='/signin'>SignIn</Link>
-        <br/>
-        <Link to='/signup'>SignUp</Link>
     </div>
   )
 }
