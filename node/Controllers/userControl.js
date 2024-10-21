@@ -8,7 +8,7 @@ const userSignup = async (req, res) => {
     const {name, email, password} = req.body;
 
     if(!name || !email || !password){
-        res.status(404).json({'Register Error':'Fill all fields'});
+        res.status(404).json({'Register Error':'Fill all fields!'});
     }
 
     const checkUser = await UserModel.findOne({email:email});
