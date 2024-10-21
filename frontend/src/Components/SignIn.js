@@ -17,7 +17,7 @@ const SignIn = () => {
         console.log('Success:', response);
         localStorage.setItem("Token",response.data.token);
         localStorage.setItem("User",JSON.stringify(response.data.u));
-        navigate('/profile');
+        navigate('/feed');
     } catch (error) {
       console.log('Failed:', error);
     }
@@ -27,7 +27,7 @@ const SignIn = () => {
   useEffect(() => {
     const token = localStorage.getItem('Token');
     if(token){
-      navigate('/profile')
+      navigate('/feed')
     }
   })
 
