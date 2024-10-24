@@ -18,4 +18,15 @@ const addPost = async (req, res) => {
 
 }
 
-module.exports = addPost;
+const allposts = async (req, res) => {
+    const posts = await PostModel.find();
+    if(posts){
+        res.status(201).json(posts);
+    }else{
+        res.status(400).json({'Sending posts':'NO users found!'});
+    }
+
+
+}
+
+module.exports = {addPost, allposts};
