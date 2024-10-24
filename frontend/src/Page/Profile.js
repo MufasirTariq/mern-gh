@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ProfileNavbar from '../Components/ProfileNavbar'; 
 
 const Profile = () => {
   const user = JSON.parse(localStorage.getItem('User'));
@@ -66,8 +67,7 @@ const Profile = () => {
 
   return (
     <div className='profile'>
-      <h1>Profile Page</h1>
-
+      <ProfileNavbar/>
       {user ? (
         <>
           <h3>{user.name}</h3>

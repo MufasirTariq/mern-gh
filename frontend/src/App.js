@@ -6,6 +6,7 @@ import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import { Navbar } from "./Components/Navbar";
 import './Css/Navbar.css'
+import ProfileNavbar from "./Components/ProfileNavbar";
 import { Feed } from "./Page/Feed";
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
     <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}></Route>
-        <Route path='/profile' element={<Profile/>}></Route>
+        <Route path='/profile' element={<Profile/>} ></Route>
         <Route path='/signup' element={<SignUp/>}></Route>
         <Route path='/signin' element={<SignIn/>}></Route>
         <Route path='/feed' element={<Feed/>}></Route>
