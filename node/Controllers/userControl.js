@@ -41,7 +41,8 @@ const userSignin = async (req, res) => {
             if (isMatch) {
                 
                 const token = jwt.sign({ _id: user._id }, jwt_secret);
-                const u = {name:user.name, email:user.email, _id:user._id}
+                const u = {name:user.name, email:user.email, _id:user._id, image:user.image}
+            
                 res.status(201).json({ u, token });
             
             } else {

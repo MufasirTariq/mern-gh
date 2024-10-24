@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../Css/Profile.css'
 
 const Profile = () => {
   const user = JSON.parse(localStorage.getItem('User'));
@@ -68,6 +69,9 @@ const Profile = () => {
     <div className='profile'>
       {user ? (
         <>
+          {user.image ? (<img src={user.image} alt='default' className='pfp' />):(
+            <img  className='pfp' src='https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?semt=ais_hybrid' alt='default user pic'/>
+          )}
           <h2>{user.name}</h2>
           <h4>{user.email}</h4>
           <h4>{friends.length} Followers</h4>
