@@ -63,7 +63,7 @@ const Profile = () => {
     }
   };
   
-  const availableUsers = users.filter(u => !friends.some(fr => fr._id === u._id) && u._id !== user._id);
+    const availableUsers = users.filter(u => !friends.some(fr => fr._id === u._id) && u._id !== user._id);
 
   return (
     <div className='profile'>
@@ -79,6 +79,7 @@ const Profile = () => {
       ) : (
         <h2>No user details</h2>
       )}
+
 
       <div className='unknown'>
         <h2>People You May Know:</h2>

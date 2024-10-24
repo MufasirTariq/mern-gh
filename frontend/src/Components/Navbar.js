@@ -12,6 +12,7 @@ export const Navbar = () => {
       return [
         <>
           <Link to = '/profile'><li>Profile</li></Link>
+          <Link to = '/addpost'><li>Add Post</li></Link>
           <Link to = {''}><button className='logout-btn' onClick={()=>{ localStorage.clear(); navigateTo('/');}}>Logout</button></Link>
         </>
       ]

@@ -1,0 +1,66 @@
+.addpost{
+    max-width: 500px;
+    margin: 10px auto;
+    border: 1px solid rgb(173, 173, 173);
+    border-radius: 5px;
+}
+
+.main-div{
+    border-top: 1px solid rgb(173, 173, 173);
+}
+
+.post-header{
+    display: flex;
+
+}
+
+#post-btn{
+    border: none;
+    color: #339ce3;
+    background: none;
+    font-weight: bolder;
+    cursor: pointer;
+
+}
+
+.details{
+    border-top: 1px solid rgb(173, 173, 173);
+
+}
+
+textarea{
+    width: 90%;
+    height: 90%;
+    border: none;
+    outline: none;
+}
+
+#output{
+    width: 300px;
+    border: none;
+    outline: none;
+    margin-left: 21%;
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
+.card-pic  img{
+    width: 30px; 
+    border-radius: 300px;
+    height: auto;
+    object-fit: contain;
+    padding: 5px;
+}
+
+.card-image img{
+    width: 100%;
+}
+
+.card-header{
+    display: flex;
+
+}
+
+.card-header > h5{
+    margin: 0;
+    padding: 11px ;
+}
