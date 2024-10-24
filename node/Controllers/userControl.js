@@ -5,7 +5,7 @@ const UserModel = require('../Models/userModel');
 jwt_secret = 'theweeknd';
 
 const userSignup = async (req, res) => {
-    const {name, email, password} = req.body;
+    const {name, email, password, imageURL} = req.body;
 
     if(!name || !email || !password){
         res.status(404).json({'Register Error':'Fill all fields!'});
@@ -17,7 +17,7 @@ const userSignup = async (req, res) => {
     }
 
     bcrypt.hash(password,10).then((hashPass) => {
-        const user = UserModel({name, email, password:hashPass});
+        const user = UserModel({name, email, password:hashPass, image:imageURL});
         user.save()
         if(user){
             res.status(201).json(user);

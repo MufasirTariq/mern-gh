@@ -6,7 +6,6 @@ import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import { Navbar } from "./Components/Navbar";
 import './Css/Navbar.css'
-import ProfileNavbar from "./Components/ProfileNavbar";
 import { Feed } from "./Page/Feed";
 
 function App() {

@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ProfileNavbar from '../Components/ProfileNavbar'; 
 
 const Profile = () => {
   const user = JSON.parse(localStorage.getItem('User'));
@@ -67,43 +66,48 @@ const Profile = () => {
 
   return (
     <div className='profile'>
-      <ProfileNavbar/>
       {user ? (
         <>
-          <h3>{user.name}</h3>
-          <h3>{user.email}</h3>
+          <h2>{user.name}</h2>
+          <h4>{user.email}</h4>
+          <h4>{friends.length} Followers</h4>
         </>
       ) : (
         <h2>No user details</h2>
       )}
 
-      <h2>People You May Know:</h2>
-      <ul>
-        {availableUsers.length > 0 ? (
-          availableUsers.map(u => (
-            <li key={u._id}>
-              {u.name} - <button type='button' onClick={() => addFriend(u._id)}>Follow</button>
-            </li>
-          ))
-        ) : (
-          <li>No users found</li>
-        )}
-      </ul>
+      <div className='unknown'>
+        <h2>People You May Know:</h2>
+        <ul>
+          {availableUsers.length > 0 ? (
+            availableUsers.map(u => (
+              <li key={u._id}>
+                {u.name} - <button type='button' onClick={() => addFriend(u._id)}>Follow</button>
+              </li>
+            ))
+          ) : (
+            <li>No users found</li>
+          )}
+        </ul>
+      </div>
 
-      <h2>Your Friends</h2>
-      <h4>{friends.length} Followers</h4>
-      <ul>
-        {friends.length > 0 ? (
-          friends.map(fr => (
-            <li key={fr._id}>
-              {fr.name} - <button type='button' onClick={() => removeFriend(fr._id)}>Unfollow</button>
-            </li>
-          ))
-        ) : (
-          <li>No Followers</li>
-        )}
-      </ul>
+      <div className='friends'>    
+        <h2>Your Friends</h2>
+        
+        <ul>
+          {friends.length > 0 ? (
+            friends.map(fr => (
+              <li key={fr._id}>
+                {fr.name} - <button type='button' onClick={() => removeFriend(fr._id)}>Unfollow</button>
+              </li>
+            ))
+          ) : (
+            <li>No Followers</li>
+          )}
+        </ul>
+      </div>
     </div>
+
   );
 };
 
