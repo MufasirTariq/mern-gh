@@ -1,12 +1,14 @@
 import { React, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios'
+import '../Css/Feed.css';
+
 
 
 export const Feed = () => {
     const navigate = useNavigate();
     var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
-
+    const user = JSON.parse(localStorage.getItem('User'))
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -29,10 +31,64 @@ export const Feed = () => {
 
       return (
         <div className='feed'>
+
           {posts.map((p) => (
             <div className='card' key={p._id}> 
-              <img src={p.post} alt='post' style={{ width: '20%' }} />
+
+              {/* card-header */}
+              <div className="card-header">
+
+                <div className="card-pic">
+                  <img src={p.postedBy.image ? p.postedBy.image:picLink } alt="" />
+                </div>
+                
+                <h5>
+                  <Link to={`/profile/${p.postedBy._id}`}>
+                  {p.postedBy.name}  
+                  </Link>
+                </h5>
+
+              </div >
+              
+              {/* Card image */}
+              <div className="card-image">
+                <img src={p.post} alt='post'  />
+              </div>
+
+              {/* card-content */}
+              <div className="card-content">
+                {
+                  p.likes.includes(user._id)?
+                  (<button type='button' 
+                    // onClick={()=>{unLikePost(user._id)}}
+                  >Unlike</button>
+                
+                  )
+                  :(<button type='button' 
+                    // onClick={()=>{likePost(user._id)}}
+                    >Like</button>
+                  )
+                }
+                <p ><strong>{p.likes.length}Likes</strong></p>
+                <p>{p.body}</p>
+                {/* <p style={{fontWeight:"bold", cursor:"pointer"}} 
+                onClick={()=>{toggleComment(p)}}
+                >View all comments</p> */}
+
+                {/* add commnets */}
+                <div className="add-comment">
+                  <span className="material-symbols-outlined"> </span>
+                  <input type='text' placeholder="Add comments" 
+                  // value={comment} 
+                  // onChange={(e)=>{setComment(e.target.value)}}
+                  />
+                  <button className="comment" 
+                  // onClick={()=>{makeComment(comment, post._id);}}
+                  >Post</button> 
+                </div>  
+              </div>
             </div>
+          
           ))}
         </div>
       );

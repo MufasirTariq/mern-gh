@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import '../Css/AddPost.css';
 import axios from 'axios';
-
+import {useNavigate, userNavigate} from 'react-router-dom';
 
 const AddPost = () => {
+    const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('User'));
 
     const loadFile = (e) => {
@@ -43,6 +44,7 @@ const AddPost = () => {
         const response =  await axios.post('http://localhost:5000/api/post/addpost',{id, caption, postURL})
         if(response){
             console.log(response);
+            navigate('/feed')
         } 
     }
 
@@ -69,10 +71,10 @@ const AddPost = () => {
 
             <div className='details'>
                 <div className='card-header'>    
-                    <div className='card-pic'>
-                        <img  src='https://media.architecturaldigest.com/photos/647e4779e92595b94166f8be/1:1/w_1273,h_1273,c_limit/abel-the-weeknd-tesfaye_2.jpg' alt=''/>
+                    <div className='card-pic' >
+                        <img  src={user.image} alt='userprofile'/>
                     </div>
-                    <h5>Username</h5>
+                    <h5>{user.name}</h5>
                 </div>
 
                 <textarea  type='text' placeholder='Caption' onChange={(e) => {setCaption(e.target.value)}}></textarea>
