@@ -17,6 +17,11 @@
     padding: 11px ;
 }
 
+.follow-btn {
+    display: flex;
+    margin: auto;
+}
+
 .card-pic  img{
     width: 30px; 
     border-radius: 300px;

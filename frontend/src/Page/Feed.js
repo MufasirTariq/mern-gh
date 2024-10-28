@@ -17,13 +17,13 @@ export const Feed = () => {
             navigate('/');
           } else {
             feed();
+            friendList();
           }
         }, []);
 
       const feed = async () => {
         const response = await axios.get('http://localhost:5000/api/post/allposts')
         if(response){
-          console.log(response);
           setPosts(response.data);
         }
       }
@@ -33,7 +33,6 @@ export const Feed = () => {
         const postId = id
         const response = await axios.post(`http://localhost:5000/api/post/like`,{userId, postId});
         if(response){
-          console.log(response.data);
           feed()
         }
         
@@ -45,13 +44,24 @@ export const Feed = () => {
         // console.log(userId, postId)
         const response = await axios.post(`http://localhost:5000/api/post/unlike`,{userId, postId});
         if(response){
-          console.log(response.data);
           feed()
         }
       }
+
+      const [friends, setFriends] = useState([]);
+
+      const friendList = async () => {
+        const id = user._id;
+        try {
+          const response = await axios.post('http://localhost:5000/api/user/friendlist', { id });
+          setFriends(response.data.friends);
+        } catch (error) {
+          console.error("Error fetching friend list:", error);
+        }
+      };
       return (
         <div className='feed'>
-
+          
           {posts.map((p) => (
             <div className='card' key={p._id}> 
 
@@ -68,6 +78,15 @@ export const Feed = () => {
                   </Link>
                 </h5>
 
+                {p.postedBy._id === user._id || friends.some(f => f._id === p.postedBy._id) ?
+                  (
+                    <></>  
+                  ) : (
+                    <div className='follow-btn'>
+                      <button type='button'>Follow</button>
+                    </div>
+                  )}
+                
               </div >
               
               {/* Card image */}
