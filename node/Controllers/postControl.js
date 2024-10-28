@@ -20,7 +20,6 @@ const addPost = async (req, res) => {
 
 const allposts = async (req, res) => {
     const posts = await PostModel.find().populate('postedBy','_id name image')
-    
     if(posts){
         res.status(201).json(posts);
     }else{
@@ -30,4 +29,33 @@ const allposts = async (req, res) => {
 
 }
 
-module.exports = {addPost, allposts};
+const like = async(req, res) => {
+    const {userId, postId} = req.body;
+
+    const likeIt = await PostModel.findByIdAndUpdate(postId,{
+        $push : {likes : userId }
+    }, {new : true})
+
+    if(likeIt){
+        res.status(201).json({info:"liked"})
+    } else {
+        res.status(401).json({info:"Not liked"})
+    }
+
+}
+
+const unlike = async (req, res) => {
+    const {postId, userId} = req.body;
+    const unliked = await PostModel.findByIdAndUpdate(postId,{
+        $pull : {likes: userId}
+    }, {new : true})
+    
+    if(unliked){
+        res.status(201).json({info:"Unliked"})
+    } else {
+        res.status(401).json({info:"Not Unliked"})
+    }
+
+}
+
+module.exports = {addPost, allposts, like, unlike};

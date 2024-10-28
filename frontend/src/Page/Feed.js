@@ -39,6 +39,16 @@ export const Feed = () => {
         
       }
 
+      const unLikePost = async (id) => {
+        const userId = user._id
+        const postId = id
+        // console.log(userId, postId)
+        const response = await axios.post(`http://localhost:5000/api/post/unlike`,{userId, postId});
+        if(response){
+          console.log(response.data);
+          feed()
+        }
+      }
       return (
         <div className='feed'>
 
@@ -67,19 +77,18 @@ export const Feed = () => {
 
               {/* card-content */}
               <div className="card-content">
-                {/* { */}
-                  {/* p.likes.includes(p._id)?
+                 {p.likes.includes(user._id) ?
                   (<button type='button' 
-                    // onClick={()=>{unLikePost(user._id)}}
+                    onClick={()=>{unLikePost(p._id)}}
                   >Unlike</button>
                 
                   )
-                  :( */}
+                  :( 
                   <button type='button' 
                     onClick={()=>{likePost(p._id)}}
                     >Like</button>
-                {/* //   )
-                // } */}
+                   )
+                }
                 <p ><strong>{p.likes.length}Likes</strong></p>
                 <p><strong>{p.postedBy.name}</strong> {p.caption}</p>
                 {/* <p style={{fontWeight:"bold", cursor:"pointer"}} 
