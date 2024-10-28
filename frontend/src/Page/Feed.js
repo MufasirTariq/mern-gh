@@ -6,9 +6,11 @@ import '../Css/Feed.css';
 
 
 export const Feed = () => {
+    
     const navigate = useNavigate();
-    var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
+  
     const user = JSON.parse(localStorage.getItem('User'))
+    
     const [posts, setPosts] = useState([]);
 
       useEffect(() => {
@@ -49,7 +51,6 @@ export const Feed = () => {
       }
 
       const [friends, setFriends] = useState([]);
-
       const friendList = async () => {
         const id = user._id;
         try {
@@ -69,7 +70,7 @@ export const Feed = () => {
               <div className="card-header">
 
                 <div className="card-pic">
-                  <img src={p.postedBy.image ? p.postedBy.image:picLink } alt="" />
+                  <img src={p.postedBy.image ? p.postedBy.image: "https://cdn-icons-png.flaticon.com/128/3177/3177440.png" } alt="" />
                 </div>
                 
                 <h5>
