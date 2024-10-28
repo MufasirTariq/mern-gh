@@ -11,14 +11,14 @@ export const Feed = () => {
     const user = JSON.parse(localStorage.getItem('User'))
     const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
-        const token = localStorage.getItem("Token");
-        if (!token) {
-          navigate('/');
-        } else {
-          feed();
-        }
-      }, []);
+      useEffect(() => {
+          const token = localStorage.getItem("Token");
+          if (!token) {
+            navigate('/');
+          } else {
+            feed();
+          }
+        }, []);
 
       const feed = async () => {
         const response = await axios.get('http://localhost:5000/api/post/allposts')
@@ -28,6 +28,16 @@ export const Feed = () => {
         }
       }
 
+      const likePost = async (id) => {
+        const userId = user._id
+        const postId = id
+        const response = await axios.post(`http://localhost:5000/api/post/like`,{userId, postId});
+        if(response){
+          console.log(response.data);
+          feed()
+        }
+        
+      }
 
       return (
         <div className='feed'>
@@ -57,20 +67,21 @@ export const Feed = () => {
 
               {/* card-content */}
               <div className="card-content">
-                {
-                  p.likes.includes(user._id)?
+                {/* { */}
+                  {/* p.likes.includes(p._id)?
                   (<button type='button' 
                     // onClick={()=>{unLikePost(user._id)}}
                   >Unlike</button>
                 
                   )
-                  :(<button type='button' 
-                    // onClick={()=>{likePost(user._id)}}
+                  :( */}
+                  <button type='button' 
+                    onClick={()=>{likePost(p._id)}}
                     >Like</button>
-                  )
-                }
+                {/* //   )
+                // } */}
                 <p ><strong>{p.likes.length}Likes</strong></p>
-                <p>{p.body}</p>
+                <p><strong>{p.postedBy.name}</strong> {p.caption}</p>
                 {/* <p style={{fontWeight:"bold", cursor:"pointer"}} 
                 onClick={()=>{toggleComment(p)}}
                 >View all comments</p> */}
