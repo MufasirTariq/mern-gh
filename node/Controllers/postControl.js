@@ -19,7 +19,7 @@ const addPost = async (req, res) => {
 }
 
 const allposts = async (req, res) => {
-    const posts = await PostModel.find().populate('postedBy','_id name image')
+    const posts = await PostModel.find().populate('postedBy','_id name image').sort('-createdAt')
     if(posts){
         res.status(201).json(posts);
     }else{

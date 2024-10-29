@@ -14,13 +14,24 @@
 
 .card-header > h5{
     margin: 0;
-    padding: 11px ;
+    padding: 13px ;
 }
 
-.follow-btn {
-    display: flex;
-    margin: auto;
+.follow-btn{
+    margin: 0;
+    padding: 15px ;
 }
+
+.follow-btn > button{
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    color: #3fa9e9;
+}
+
+
+
+
 
 .card-pic  img{
     width: 30px; 

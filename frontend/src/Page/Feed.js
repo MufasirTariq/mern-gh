@@ -60,6 +60,17 @@ export const Feed = () => {
         feed(); 
     };
 
+    const addFriend = async (friendId) => {
+        const id = user._id;
+        try {
+          const response = await axios.post('http://localhost:5000/api/user/addfriend', { friendId, id });
+          console.log(response.data);
+          friendList();
+        } catch (error) {
+          console.error("Error adding friend:", error);
+        }
+      };
+
     const [modalOpen, setModalOpen] = useState(false);
     const [currentComments, setCurrentComments] = useState([]);
 
@@ -97,7 +108,9 @@ export const Feed = () => {
                         </h5>
                         {p.postedBy._id === user._id || friends.some(f => f._id === p.postedBy._id) ? null : (
                             <div className='follow-btn'>
-                                <button type='button'>Follow</button>
+                                <button type='button' 
+                                onClick={() => addFriend(p.postedBy._id)}
+                                >Follow</button>
                             </div>
                         )}
                     </div>
