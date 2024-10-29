@@ -96,7 +96,7 @@ h2 {
     gap: 20px; 
   }
   
-  .myPostsFrame img {
+.myPostsFrame img {
     margin-top: 20px;
     width: 250px; 
     height: auto; 
