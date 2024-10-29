@@ -58,4 +58,17 @@ const unlike = async (req, res) => {
 
 }
 
-module.exports = {addPost, allposts, like, unlike};
+const comment = async (req, res) => {
+    const {comment, postId, userId} = req.body;
+    const makeComment = await PostModel.findByIdAndUpdate(postId,{
+        $push : {comments: { comment: comment, postedBy: userId } }
+    }, {new : true})
+
+    if(makeComment){
+        res.status(201).json({status:"Commented"})
+    } else {
+        res.status(401).json({status:" Not Commented"})
+    }
+}
+
+module.exports = {addPost, allposts, like, unlike, comment};

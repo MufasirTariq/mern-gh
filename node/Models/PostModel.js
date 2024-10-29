@@ -9,7 +9,7 @@ const PostSchema = new mongoose.Schema({
 
     likes:[{type:ObjectId, ref:UserModel}],
 
-    comment:[{
+    comments:[{
         comment:{type:String},
         postedBy:{type:ObjectId, ref:UserModel}
     }]

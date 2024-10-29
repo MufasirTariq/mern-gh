@@ -28,7 +28,7 @@ export const Feed = () => {
         if(response){
           setPosts(response.data);
         }
-      }
+      };
 
       const likePost = async (id) => {
         const userId = user._id
@@ -38,7 +38,7 @@ export const Feed = () => {
           feed()
         }
         
-      }
+      };
 
       const unLikePost = async (id) => {
         const userId = user._id
@@ -48,7 +48,7 @@ export const Feed = () => {
         if(response){
           feed()
         }
-      }
+      };
 
       const [friends, setFriends] = useState([]);
       const friendList = async () => {
@@ -60,6 +60,31 @@ export const Feed = () => {
           console.error("Error fetching friend list:", error);
         }
       };
+
+      const [comment, setComment] = useState([]);
+      const makeComment = async (comment, postId) => {
+        const userId = user._id
+
+        const response = await axios.post('http://localhost:5000/api/post/comment',{comment, postId, userId})
+        if (response) {
+          setComment('')
+        } else {
+          console.log("error", response.error)
+        }
+      };
+
+      const viewComment = async (id) => {
+        const postId =  id
+        const response =  await axios.get('http://localhost:5000/api/post/allComments',{postId})
+        if(response){
+          console.log(response.data)
+        } else {
+          console.log(response.error)
+        }
+      }
+
+
+
       return (
         <div className='feed'>
           
@@ -111,19 +136,19 @@ export const Feed = () => {
                 }
                 <p ><strong>{p.likes.length}Likes</strong></p>
                 <p><strong>{p.postedBy.name}</strong> {p.caption}</p>
-                {/* <p style={{fontWeight:"bold", cursor:"pointer"}} 
-                onClick={()=>{toggleComment(p)}}
-                >View all comments</p> */}
+                <p style={{fontWeight:"bold", cursor:"pointer"}} 
+                onClick={()=>{viewComment(p._id)}}
+                >View all comments</p> 
 
                 {/* add commnets */}
                 <div className="add-comment">
                   <span className="material-symbols-outlined"> </span>
                   <input type='text' placeholder="Add comments" 
-                  // value={comment} 
-                  // onChange={(e)=>{setComment(e.target.value)}}
+                  value={comment} 
+                  onChange={(e)=>{setComment(e.target.value)}}
                   />
                   <button className="comment" 
-                  // onClick={()=>{makeComment(comment, post._id);}}
+                  onClick={()=>{makeComment(comment, p._id);}}
                   >Post</button> 
                 </div>  
               </div>
