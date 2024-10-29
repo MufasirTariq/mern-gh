@@ -17,7 +17,7 @@
 
 .modal {
   width: 360px;
-  height:120px;
+  padding: 10px;
   background: white;
   color: black; /* Changed text color for visibility */
   z-index: 1001; /* Should be higher than .darkBg */
