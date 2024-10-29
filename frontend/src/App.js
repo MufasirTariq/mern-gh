@@ -10,6 +10,7 @@ import { Feed } from "./Page/Feed";
 import AddPost from "./Page/AddPost";
 
 function App() {
+
   return (
     <BrowserRouter>
     <Navbar/>

@@ -71,4 +71,18 @@ const comment = async (req, res) => {
     }
 }
 
-module.exports = {addPost, allposts, like, unlike, comment};
+const allComments = async (req, res) => {
+    const {postId} = req.body;
+    const commentList = await PostModel.findById(postId)
+    .populate('postedBy', '_id name image').populate('comments.postedBy', '_id name')
+    .select('-likes ')
+
+    if(commentList){
+        res.status(201).json(commentList)
+    } else {
+        res.status(401).json("No commentList")
+    }
+}
+
+
+module.exports = {addPost, allposts, like, unlike, comment, allComments};
