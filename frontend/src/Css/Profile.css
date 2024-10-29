@@ -1,6 +1,105 @@
-.pfp{
-    width: 120px;
-    height: 120px;
+.profile {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 20px;
+}
+
+.pfp {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
+    margin-right: 20px;
+    border: 2px solid #e6e6e6;
+}
+
+h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.suggestions, .friends {
+    width: 45%; /* Adjust width to fit the layout */
+    margin-top: 20px;
+}
+
+.suggestions h2, .friends h2 {
+    margin-bottom: 10px;
+}
+
+.profile-ul {
+    display: inline;
+    padding: 0;
+}
+
+.profile-li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e6e6e6;
+    color: black;
+}
+
+.profile-follow-btn {
+    background-color: #0095f6;
+    border: none;
+    color: white;
+    padding: 9px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10%;
+}
+
+.profile-follow-btn:hover {
+    background-color: #007bb5;
+}
+
+.userDetails {
+    display: flex; 
+    justify-content: normal; 
+    margin-top: 10px; 
+}
+
+.userDetails h4 {
+    margin: 0; 
+    padding: 0 10px; 
+}
+
+.edit-profile{
+    border: none;
+    margin-left: 4% ;
+    background-color:grey;
+    color: black;
+    padding: 9px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10%;
+    font-weight: bold;
 
 }
+.myPostsFrame {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+  }
+  
+  .myPostsFrame img {
+    margin-top: 20px;
+    width: 250px; 
+    height: auto; 
+    border-radius: 5px;
+  }
+  

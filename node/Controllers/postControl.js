@@ -84,5 +84,13 @@ const allComments = async (req, res) => {
     }
 }
 
-
-module.exports = {addPost, allposts, like, unlike, comment, allComments};
+const myposts = async(req, res) => {
+    const {userId} = req.body;
+    const myPostsList = await PostModel.find({postedBy: userId})
+    if(myPostsList){
+        res.status(201).json(myPostsList)
+    } else {
+        res.status(401).json("NO myPostsList")
+    }
+}
+module.exports = {addPost, allposts, like, unlike, comment, allComments, myposts};

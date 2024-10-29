@@ -1,5 +1,5 @@
 .darkBg {
-  background-color: rgba(0, 0, 0, 0.5); /* Darker background for better visibility */
+  background-color: rgba(0, 0, 0, 23%); /* Darker background for better visibility */
   width: 100vw;
   height: 100vh;
   z-index: 1000; /* Increased z-index to ensure it overlays properly */
