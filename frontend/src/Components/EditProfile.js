@@ -37,15 +37,21 @@ const EditProfile = () => {
   return (
     <div className='updateform'>
 
-    <form >
-        <img src={user.image} alt='User Profile' className='pfp' />
-        <input type='text' value={name} onChange={(e) => setName(e.target.value)} placeholder={user.name}  />
-        <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder={user.email}/>
-        <input type='password'  value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Enter New Password' />
-        <input type='password' value={conPassword} onChange={(e) => setConPassword(e.target.value)} placeholder='Confirm New Password' />
-        <input type='button' value='Save Changes' onClick={() => {UpdateUserDeatils()}} />
-    </form>
-</div>
+        <form >    
+            <img src={user.image} alt='User Profile' className='pfp'/>
+            
+            <input type='text' value={name} onChange={(e) => setName(e.target.value)} placeholder={user.name}/>
+            
+            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder={user.email}/>
+            
+            <input type='password'  value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Enter New Password'/>
+            
+            <input type='password' value={conPassword} onChange={(e) => setConPassword(e.target.value)} placeholder='Confirm New Password'/>
+            
+            <input type='button' value='Save Changes' onClick={() => {UpdateUserDeatils()}}/>
+        </form>
+    
+    </div>
   )
 }
 
