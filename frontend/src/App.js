@@ -8,6 +8,7 @@ import { Navbar } from "./Components/Navbar";
 import './Css/Navbar.css'
 import { Feed } from "./Page/Feed";
 import AddPost from "./Page/AddPost";
+import EditProfile from "./Components/EditProfile";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='/signin' element={<SignIn/>}></Route>
         <Route path='/feed' element={<Feed/>}></Route>
         <Route path='/addpost' element={<AddPost/>}></Route>
+        <Route path='/editprofile' element={<EditProfile/>}></Route>
       </Routes>
     </BrowserRouter>
   );

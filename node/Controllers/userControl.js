@@ -158,6 +158,37 @@ const friendList = async (req, res) => {
     }  
 }
 
+const getUserDetails = async (req,res) => {
+    const details = await UserModel.findById(req.body.userId).select('-friends -createdAt -updatedAt')
+    console.log(details);
+    if(details){
+        res.status(201).json(details);
+    } else {
+        res.status(401).json("No details");
+    }
+
+}
+
+const updateUser = async (req, res) => {
+    const { userId, name, email, password } = req.body;
+    console.log(userId)
+
+    try {
+        const hashPass = await bcrypt.hash(password, 10);
+        const user = await UserModel.findByIdAndUpdate(userId, {name,email,password: hashPass,},
+             { new: true }).select('-password -createdAt -friends -updatedAt')
+
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json({ 'Update Error': 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ 'Update Error': error.message });
+    }
+};
+
+
 module.exports = {
     userSignup,
     userSignin,
@@ -165,4 +196,6 @@ module.exports = {
     addFriend,
     removeFriend,
     friendList,
+    getUserDetails,
+    updateUser,
 }; 

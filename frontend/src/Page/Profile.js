@@ -82,19 +82,21 @@ const Profile = () => {
         <img className='pfp' src='https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?semt=ais_hybrid' alt='Default User' />
       )}
       <h2>{user.name}</h2>
-      <button className='edit-profile'>Edit Profile</button>
-      <div className='userDetails'>
-    <h4>{friends.length} Friends</h4>
-    <h4>{myposts.length} Posts</h4>
-  </div>
+      <button className='edit-profile' type='button' 
+      onClick={() => {
+        navigate('/editprofile')
+      }}>Edit Profile</button>
     </div>
     
   ) : (
     <h2>No user details</h2>
   )}
-  
 
-  
+    <div className='userDetails'>
+      <h4>{friends.length} Friends</h4>
+      <h4>{myposts.length} Posts</h4>
+    </div>
+
   <div className='myPostsFrame'>
   {myposts.map((mp) => (
     <img key={mp._id} src={mp.post} />
