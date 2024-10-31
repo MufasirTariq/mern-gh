@@ -188,6 +188,17 @@ const updateUser = async (req, res) => {
     }
 };
 
+const removePfp = async (req, res) => {
+    console.log(req.body.userId)
+    const removepfp = await UserModel.findByIdAndUpdate(req.body.userId,{image:null},{new:true});
+    if(removepfp){
+        const user = await UserModel.findById(removepfp._id).select('-createdAt -updatedAt -friends -password')
+        res.status(201).json(user);
+    } else {
+        res.status(401).json({status:"Pfp not Removed"});
+    }
+}
+
 
 module.exports = {
     userSignup,
@@ -198,4 +209,5 @@ module.exports = {
     friendList,
     getUserDetails,
     updateUser,
+    removePfp,
 }; 

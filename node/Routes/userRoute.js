@@ -1,6 +1,6 @@
 const express = require('express');
 const route = express.Router();
-const {userSignup, userSignin, getAllUsers, addFriend, friendList, removeFriend, getUserDetails, updateUser} = require('../Controllers/userControl');
+const {userSignup, userSignin, getAllUsers, addFriend, friendList, removeFriend, getUserDetails, updateUser, removePfp} = require('../Controllers/userControl');
 
 route.post('/signup', userSignup);
 route.post('/signin', userSignin);
@@ -10,5 +10,6 @@ route.post('/removefriend', removeFriend);
 route.post('/friendlist', friendList);
 route.post('/getuserdetails', getUserDetails );
 route.post('/updateuser', updateUser );
+route.post('/removePfp', removePfp );
 
 module.exports = route;
