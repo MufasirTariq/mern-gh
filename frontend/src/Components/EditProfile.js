@@ -47,7 +47,7 @@ const EditProfile = () => {
             {user.image ? (
                  <img src={user.image} alt='User Profile' className='pfp' onClick={changePfp} />
             ) : (
-                <img className='pfp' src='https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?semt=ais_hybrid' alt='Default User' />
+                <img className='pfp' onClick={changePfp} src='https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?semt=ais_hybrid' alt='Default User' />
                 )}    
                
                 

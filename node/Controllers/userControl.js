@@ -199,6 +199,17 @@ const removePfp = async (req, res) => {
     }
 }
 
+const updatePfp = async (req, res) => {
+    const {userId, imageUrl} = req.body;
+    console.log(userId, imageUrl);
+    const updatedUser = await UserModel.findByIdAndUpdate(userId,{image:imageUrl}, { new: true })
+    if(updatedUser){
+        const user = await UserModel.findById(updatedUser._id).select('-createdAt -updatedAt -friends -password')
+        res.status(201).json(user)
+    } else {
+        res.status(201).json({status:"Error in updating photo"})
+    }
+}
 
 module.exports = {
     userSignup,
@@ -210,4 +221,5 @@ module.exports = {
     getUserDetails,
     updateUser,
     removePfp,
+    updatePfp,
 }; 
