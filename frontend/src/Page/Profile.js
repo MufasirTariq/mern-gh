@@ -9,6 +9,7 @@ const Profile = () => {
   
   const [users, setUsers] = useState([]);
   const [friends, setFriends] = useState([]);
+  const [myposts, setMyPosts] = useState([]);
 
   const fetchingAllUsers = async () => {
     try {
@@ -30,15 +31,14 @@ const Profile = () => {
     }
   }, [navigate]);
 
-  const [myposts, setMyPosts] = useState([]);
   const myPostList = async() => {
-    const userId = user._id
-    const response = await axios.post('http://localhost:5000/api/post/myposts',{userId})
-    if(response){
+    const userId = user._id;
+    const response = await axios.post('http://localhost:5000/api/post/myposts', { userId });
+    if (response) {
       console.log(response.data);
       setMyPosts(response.data);
     }
-  }
+  };
 
   const addFriend = async (friendId) => {
     const id = user._id;
@@ -73,71 +73,75 @@ const Profile = () => {
   const availableUsers = users.filter(u => !friends.some(fr => fr._id === u._id) && u._id !== user._id);
 
   return (
-    <div className='profile'>
-  {user ? (
-    <div className="profile-info">
-      {user.image ? (
-        <img src={user.image} alt='User Profile' className='pfp' />
-      ) : (
-        <img className='pfp' src='https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?semt=ais_hybrid' alt='Default User' />
-      )}
-      <h2>{user.name}</h2>
-      <button className='edit-profile' type='button' 
-      onClick={() => {
-        navigate('/editprofile')
-      }}>Edit Profile</button>
-    </div>
-    
-  ) : (
-    <h2>No user details</h2>
-  )}
+    <div className='profile-page'>
+      <nav className='sidebar'>
+        <div className='profile-info'>
+          {user.image ? (
+            <img src={user.image} alt='User Profile' className='profile-pfp' />
+          ) : (
+            <img className='profile-pfp' src='https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?semt=ais_hybrid' alt='Default User' />
+          )}
+          <h3 className='profile-h3'>{user.name}</h3>
+          <h3 className='profile-h3' >{friends.length} Friends {myposts.length} Posts</h3>
+          <h3 className='profile-h3'></h3>
+        </div>
+        <button className='edit-profile' type='button' onClick={() => { navigate('/editprofile') }}>Edit Profile</button>
+      </nav>
+      
+      <main className='main-content'>
+        <div className='posts'>
+          {myposts.map((mp) => (
+            <img key={mp._id} src={mp.post} className='post-image' />
+          ))}
+        </div>
 
-    <div className='userDetails'>
-      <h4>{friends.length} Friends</h4>
-      <h4>{myposts.length} Posts</h4>
-    </div>
+        <div className='sidebar-right'>
+          <div className='friends'>
+            <h3>Your Friends</h3>
+            <ul className='profile-ul' style={{textAlign:'left' }}>
+              {friends.length > 0 ? (
+              friends.map(fr => (
+                <li key={fr._id} className='profile-li'>
+                  {fr.image ? (
+                      <img src={fr.image} alt='User Profile' style={{width:'40px', height:'40px', borderRadius:'50%' }} />
+                      ) : (
+                        <img style={{width:'40px', height:'40px', borderRadius:'50%' }} src='https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?semt=ais_hybrid' alt='Default User' />
+                      )}
+                  <p className='friend-name'>{fr.name}</p>
+                  <button type='button' className='profile-follow-btn' onClick={() => removeFriend(fr._id)}>Unfollow</button>
+                </li>
+                ))
+                ) : (
+                <li className='profile-li'>No Friends</li>
+                )}
+              </ul>
 
-  <div className='myPostsFrame'>
-  {myposts.map((mp) => (
-    <img key={mp._id} src={mp.post} />
-  ))}
-</div>
-  
-  <div className='content'>
-    <div className='friends'>    
-      <h2>Your Friends</h2>
-      <ul className='profile-ul' >
-        {friends.length > 0 ? (
-          friends.map(fr => (
-            <li key={fr._id} className='profile-li' >
-              <p>{fr.name}</p>  
-              <button type='button' className='profile-follow-btn' onClick={() => removeFriend(fr._id)}>Unfollow</button>
-            </li>
-          ))
-        ) : (
-          <li className='profile-li' >No Followers</li>
-        )}
-      </ul>
-    </div>
 
-    <div className='suggestions'>
-      <h2>People You May Know:</h2>
-      <ul  className='profile-ul' >
-        {availableUsers.length > 0 ? (
-          availableUsers.map(u => (
-            <li key={u._id} className='profile-li'>
-              <p>{u.name}</p>  
-              <button type='button' className='profile-follow-btn' onClick={() => addFriend(u._id)}>Follow</button>
-            </li>
-          ))
-        ) : (
-          <li className='profile-li' >No users found</li>
-        )}
-      </ul>
-    </div>
-  </div>
-</div>
+          </div>
 
+          <div className='suggestions'>
+            <h3>People You May Know:</h3>
+            <ul className='profile-ul'>
+              {availableUsers.length > 0 ? (
+                availableUsers.map(u => (
+                  <li key={u._id} className='profile-li'>
+                    {u.image ? (
+                      <img src={u.image} alt='User Profile' style={{width:'40px', height:'40px', borderRadius:'50%' }} />
+                      ) : (
+                        <img style={{width:'40px', height:'40px', borderRadius:'50%' }} src='https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?semt=ais_hybrid' alt='Default User' />
+                      )}
+                    <p>{u.name}</p>
+                    <button type='button' className='profile-follow-btn' onClick={() => addFriend(u._id)}>Follow</button>
+                  </li>
+                ))
+              ) : (
+                <li className='profile-li'>No users found</li>
+              )}
+            </ul>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 };
 

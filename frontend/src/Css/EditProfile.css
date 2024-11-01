@@ -54,3 +54,8 @@ input[type='button'] {
 input[type='button']:hover {
     background-color: #00000060;
 }
+
+.profile-li-pf{
+    width: 50px;
+    height: 50px;
+}
